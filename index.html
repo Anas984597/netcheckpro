@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07101d">
+  <title>NetCheck PRO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#home" data-view-link="home" aria-label="NetCheck PRO">
+        <img src="assets/logo.svg" alt="NetCheck logo" class="brand-logo">
+        <span class="brand-text">NetCheck <b>PRO</b></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-btn active" type="button" data-view-link="home">
+          <span>⌂</span><span data-i18n="navHome">الرئيسية</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-link="speed">
+          <span>◴</span><span data-i18n="navSpeed">فحص السرعة</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-link="router">
+          <span>♜</span><span data-i18n="navRouter">مساعد الراوتر</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-link="safe">
+          <span>⬟</span><span data-i18n="navSafe">الحماية</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-link="settings">
+          <span>⚙</span><span data-i18n="navSettings">الإعدادات</span>
+        </button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="chip-btn" type="button" id="themeToggle" aria-label="Theme toggle">
+          <span id="themeIcon">☾</span>
+        </button>
+        <button class="chip-btn lang" type="button" id="langToggle">
+          <span>◎</span><span id="langLabel">AR</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view active" id="view-home">
+        <div class="hero-card">
+          <div class="gauge-zone">
+            <div class="speed-gauge big" id="homeGauge" style="--gauge: 0deg">
+              <div class="ticks" aria-hidden="true">
+                <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span>
+              </div>
+              <div class="gauge-core">
+                <strong id="homeSpeedValue">0</strong>
+                <span>Mbps</span>
+              </div>
+              <span class="gauge-needle" aria-hidden="true"></span>
+            </div>
+            <button class="run-button" type="button" id="homeStartBtn">
+              <span class="run-dot"></span>
+              <span data-i18n="startCheck">ابدأ الفحص</span>
+            </button>
+            <p class="test-caption" id="homeCaption" data-i18n="homeCaption">اضغط لاختبار سرعة اتصالك وحالة الشبكة</p>
+          </div>
+
+          <div class="dashboard-side">
+            <div class="metric-cards">
+              <article class="metric-card">
+                <span class="metric-icon green">⌁</span>
+                <p data-i18n="ping">Ping</p>
+                <strong id="pingMetric">--</strong>
+                <small>ms</small>
+                <em id="pingState" data-i18n="waiting">في الانتظار</em>
+              </article>
+              <article class="metric-card">
+                <span class="metric-icon blue">↓</span>
+                <p data-i18n="download">Download</p>
+                <strong id="downloadMetric">--</strong>
+                <small>Mbps</small>
+                <em id="downloadState" data-i18n="waiting">في الانتظار</em>
+              </article>
+              <article class="metric-card">
+                <span class="metric-icon purple">↑</span>
+                <p data-i18n="upload">Upload</p>
+                <strong id="uploadMetric">--</strong>
+                <small>Mbps</small>
+                <em id="uploadState" data-i18n="waiting">في الانتظار</em>
+              </article>
+            </div>
+
+            <div class="network-strip">
+              <article>
+                <span class="strip-icon">◎</span>
+                <p data-i18n="ipAddress">عنوان IP</p>
+                <strong id="ipValue">--</strong>
+              </article>
+              <article>
+                <span class="strip-icon">▥</span>
+                <p data-i18n="provider">مزود الخدمة</p>
+                <strong id="ispValue">--</strong>
+              </article>
+              <article>
+                <span class="strip-icon">⌖</span>
+                <p data-i18n="location">الموقع</p>
+                <strong id="locationValue">--</strong>
+              </article>
+              <article>
+                <span class="strip-icon">◒</span>
+                <p data-i18n="connectionType">نوع الاتصال</p>
+                <strong id="connectionValue">WiFi</strong>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagnosis-card panel" id="homeDiagnosisCard" style="display: none; padding: 18px; text-align: center; margin-top: 18px; border-color: rgba(0, 245, 160, 0.3); background: rgba(0, 245, 160, 0.04);">
+          <h3 data-i18n="diagnosisTitle" style="margin-top:0; margin-bottom: 8px; font-size: 1.1rem; color: var(--green);">تحليل المشكلة</h3>
+          <p id="homeDiagnosisText" style="color: var(--text); font-size: 0.95rem; line-height: 1.5; margin: 0;">--</p>
+          <div id="homeProviderSupport" style="display: none; margin-top: 14px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border: 1px solid var(--line); align-items: center; justify-content: center; gap: 12px;">
+            <span style="font-size: 1.5rem;">📞</span>
+            <div style="text-align: start;">
+              <small style="display: block; color: var(--muted); margin-bottom: 2px;" data-i18n="customerService">رقم خدمة العملاء:</small>
+              <strong id="homeSupportNumber" style="color: var(--green); font-size: 1.2rem; letter-spacing: 1px;">--</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-lower">
+          <section class="panel router-summary">
+            <div class="panel-title">
+              <span class="title-icon">▣</span>
+              <h2 data-i18n="routerAssistant">مساعد الراوتر</h2>
+            </div>
+            <div class="quick-guides">
+              <button class="quick-guide" type="button" data-open-guide="block">
+                <span class="guide-icon purple">♚</span>
+                <strong data-i18n="blockDevices">منع الأجهزة</strong>
+                <small data-i18n="blockDevicesText">عرض الأجهزة المتصلة وإدارة الحظر</small>
+                <em data-i18n="openGuide">فتح الدليل</em>
+              </button>
+              <button class="quick-guide" type="button" data-open-guide="wifi">
+                <span class="guide-icon blue">◒</span>
+                <strong data-i18n="fixWifi">تحسين الواي فاي</strong>
+                <small data-i18n="fixWifiText">نصائح لتحسين السرعة واستقرار الشبكة</small>
+                <em data-i18n="openGuide">فتح الدليل</em>
+              </button>
+              <button class="quick-guide" type="button" data-open-guide="password">
+                <span class="guide-icon green">▣</span>
+                <strong data-i18n="changePassword">تغيير كلمة المرور</strong>
+                <small data-i18n="changePasswordText">خطوات تغيير كلمة مرور الواي فاي</small>
+                <em data-i18n="openGuide">فتح الدليل</em>
+              </button>
+            </div>
+          </section>
+
+          <section class="panel safety-summary">
+            <div class="panel-title">
+              <span class="title-icon shield">⬟</span>
+              <h2 data-i18n="parentalTitle">الحماية والرقابة الأبوية</h2>
+            </div>
+            <div class="protection-card">
+              <div class="protection-copy">
+                <span class="shield-large">⬟</span>
+                <div>
+                  <h3 data-i18n="protectionActive">حماية الإنترنت جاهزة</h3>
+                  <p data-i18n="protectionText">استخدم فلترة DNS لحماية البيت من المواقع غير المناسبة.</p>
+                  <button class="mini-action" type="button" data-view-link="safe" data-i18n="showDnsSettings">عرض إعدادات DNS</button>
+                </div>
+              </div>
+              <div class="dns-box">
+                <span data-i18n="useDns">استخدم</span>
+                <strong>1.1.1.3<br>1.0.0.3</strong>
+                <small>Cloudflare for Families</small>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view speed-page" id="view-speed">
+        <div class="page-heading">
+          <span>⌁</span>
+          <div>
+            <h1 data-i18n="speedPageTitle">فحص سرعة الإنترنت</h1>
+            <p data-i18n="speedPageText">اختبار شامل لسرعة اتصالك وجودة الشبكة</p>
+          </div>
+        </div>
+
+        <section class="ookla-panel">
+          <div class="ookla-results">
+            <div class="ookla-score">
+              <span class="score-label download">↓ <b data-i18n="download">Download</b> Mbps</span>
+              <strong id="speedDownloadLarge">--</strong>
+            </div>
+            <div class="ookla-score">
+              <span class="score-label upload">↑ <b data-i18n="upload">Upload</b> Mbps</span>
+              <strong id="speedUploadLarge">--</strong>
+            </div>
+          </div>
+
+          <div class="ping-row">
+            <span><b data-i18n="ping">Ping</b> <small>ms</small></span>
+            <span class="ping-pill idle">⚡ <b id="speedPingIdle">--</b></span>
+            <span class="ping-pill down">↓ <b id="speedPingDown">--</b></span>
+            <span class="ping-pill up">↑ <b id="speedPingUp">--</b></span>
+          </div>
+
+          <div class="ookla-body">
+            <div class="go-column">
+              <button class="go-button" type="button" id="speedStartBtn">GO</button>
+              <div class="connection-card">
+                <span class="round-icon">⇄</span>
+                <div>
+                  <strong data-i18n="connections">Connections</strong>
+                  <p id="connectionMode">Multi</p>
+                </div>
+              </div>
+              <div class="connection-card">
+                <span class="round-icon">◎</span>
+                <div>
+                  <strong id="serverName">Cloudflare Edge</strong>
+                  <p id="serverLocation">Auto</p>
+                  <button class="text-action" type="button" id="changeServerBtn" data-i18n="changeServer">Change Server</button>
+                </div>
+              </div>
+              <div class="connection-card">
+                <span class="round-icon">◌</span>
+                <div>
+                  <strong id="speedProviderName">Provider</strong>
+                  <p id="speedProviderIp">--</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="usage-column">
+              <div class="usage-grid" aria-label="Network use cases">
+                <button class="usage-card active" type="button" data-profile="browse">
+                  <span class="usage-icon">▣</span>
+                  <b data-i18n="usageBrowse">Browse</b>
+                  <i><span></span><span></span><span></span><span></span><span></span></i>
+                </button>
+                <button class="usage-card" type="button" data-profile="gaming">
+                  <span class="usage-icon">⌘</span>
+                  <b data-i18n="usageGaming">Gaming</b>
+                  <i><span></span><span></span><span></span><span></span><span></span></i>
+                </button>
+                <button class="usage-card" type="button" data-profile="video">
+                  <span class="usage-icon">▶</span>
+                  <b data-i18n="usageVideo">Video</b>
+                  <i><span></span><span></span><span></span><span></span><span></span></i>
+                </button>
+                <button class="usage-card" type="button" data-profile="calls">
+                  <span class="usage-icon">▤</span>
+                  <b data-i18n="usageCalls">Calls</b>
+                  <i><span></span><span></span><span></span><span></span><span></span></i>
+                </button>
+              </div>
+
+              <div class="rating-card">
+                <h3 data-i18n="rateProvider">Rate your provider</h3>
+                <p id="ratingProviderName">Cloudflare</p>
+                <div class="stars" id="providerStars" role="radiogroup" aria-label="Provider rating">
+                  <button type="button" data-rating="1">★</button>
+                  <button type="button" data-rating="2">★</button>
+                  <button type="button" data-rating="3">★</button>
+                  <button type="button" data-rating="4">★</button>
+                  <button type="button" data-rating="5">★</button>
+                </div>
+                <small data-i18n="ratingNote">تقييمك يساعدك تحفظ انطباعك عن جودة المزود بعد كل اختبار.</small>
+              </div>
+
+              <div class="diagnosis-card panel" id="diagnosisCard" style="display: none; padding: 18px; text-align: center; margin-top: 10px;">
+                <h3 data-i18n="diagnosisTitle" style="margin-top:0; margin-bottom: 8px; font-size: 1.1rem;">تحليل المشكلة</h3>
+                <p id="diagnosisText" style="color: var(--muted); font-size: 0.95rem; line-height: 1.5; margin: 0;">--</p>
+                <div id="providerSupport" style="display: none; margin-top: 14px; background: var(--panel-2); padding: 12px; border-radius: 8px; border: 1px solid var(--line); align-items: center; justify-content: center; gap: 12px;">
+                  <span style="font-size: 1.5rem;">📞</span>
+                  <div style="text-align: start;">
+                    <small style="display: block; color: var(--muted); margin-bottom: 2px;" data-i18n="customerService">رقم خدمة العملاء:</small>
+                    <strong id="supportNumber" style="color: var(--green); font-size: 1.1rem;">--</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel graph-panel">
+          <div class="panel-title">
+            <span class="title-icon">▧</span>
+            <h2 data-i18n="liveGraph">الرسم الحي للفحص</h2>
+            <em id="testStage" data-i18n="waiting">في الانتظار</em>
+          </div>
+          <canvas id="speedGraph" width="1100" height="260"></canvas>
+        </section>
+      </section>
+
+      <section class="view router-page" id="view-router">
+        <div class="page-heading">
+          <span>▣</span>
+          <div>
+            <h1 data-i18n="routerPageTitle">مساعد الراوتر</h1>
+            <p data-i18n="routerPageText">أدلة تفاعلية لإدارة وتحسين الراوتر</p>
+          </div>
+        </div>
+
+        <section class="panel guide-panel">
+          <div class="guide-tabs" role="tablist" aria-label="Router guides">
+            <button class="guide-tab active" type="button" data-guide="password" data-i18n="guidePassword">تغيير كلمة المرور</button>
+            <button class="guide-tab" type="button" data-guide="wifi" data-i18n="guideWifi">تحسين الواي فاي</button>
+            <button class="guide-tab" type="button" data-guide="block" data-i18n="guideBlock">منع الأجهزة</button>
+            <button class="guide-tab" type="button" data-guide="advanced" data-i18n="guideAdvanced">إعدادات متقدمة</button>
+          </div>
+
+          <div class="guide-layout">
+            <div>
+              <h2 id="guideTitle">تغيير كلمة مرور الواي فاي</h2>
+              <p id="guideSubtitle">خطوات آمنة وسهلة لحماية شبكتك</p>
+              <div class="guide-steps" id="guideSteps"></div>
+              <div class="guide-note" id="guideNote"></div>
+            </div>
+
+            <aside class="tips-card">
+              <h3 data-i18n="safeTips">نصائح مهمة</h3>
+              <ul id="guideTips"></ul>
+              <button class="router-open" type="button" id="openRouterBtn" data-i18n="openRouter">فتح صفحة الراوتر</button>
+            </aside>
+          </div>
+        </section>
+      </section>
+
+      <section class="view safe-page" id="view-safe">
+        <div class="page-heading">
+          <span>⬟</span>
+          <div>
+            <h1 data-i18n="safePageTitle">الحماية والرقابة الأبوية</h1>
+            <p data-i18n="safePageText">خيارات سهلة لحماية شبكة البيت من المحتوى غير المناسب</p>
+          </div>
+        </div>
+
+        <div class="safe-grid">
+          <section class="panel dns-panel">
+            <h2 data-i18n="dnsTitle">DNS آمن للعائلة</h2>
+            <div class="dns-option recommended">
+              <span class="badge" data-i18n="recommended">مقترح</span>
+              <h3>Cloudflare for Families</h3>
+              <strong>1.1.1.3 / 1.0.0.3</strong>
+              <p data-i18n="cloudflareText">يحجب المحتوى الإباحي والمواقع الضارة على مستوى الشبكة.</p>
+              <button class="copy-dns" type="button" data-copy="1.1.1.3, 1.0.0.3" data-i18n="copyDns">نسخ DNS</button>
+            </div>
+            <div class="dns-option">
+              <h3>OpenDNS FamilyShield</h3>
+              <strong>208.67.222.123 / 208.67.220.123</strong>
+              <p data-i18n="opendnsText">بديل جيد لحماية الأطفال والتصفح العائلي.</p>
+              <button class="copy-dns" type="button" data-copy="208.67.222.123, 208.67.220.123" data-i18n="copyDns">نسخ DNS</button>
+            </div>
+          </section>
+
+          <section class="panel apply-panel">
+            <h2 data-i18n="applyTitle">تطبيق الحماية</h2>
+            <ol id="dnsSteps"></ol>
+            <button class="router-open wide" type="button" id="openRouterSafe" data-i18n="openRouter">فتح صفحة الراوتر</button>
+          </section>
+        </div>
+      </section>
+
+      <section class="view settings-page" id="view-settings">
+        <div class="page-heading">
+          <span>⚙</span>
+          <div>
+            <h1 data-i18n="settingsTitle">الإعدادات</h1>
+            <p data-i18n="settingsText">تحكم في اللغة، الوضع الليلي، وسلوك التجربة</p>
+          </div>
+        </div>
+        <section class="panel settings-grid">
+          <button class="setting-row" type="button" id="settingTheme">
+            <span>☾</span>
+            <div>
+              <strong data-i18n="themeSetting">الوضع الليلي / النهاري</strong>
+              <p data-i18n="themeSettingText">بدل بين التصميم الداكن والفاتح</p>
+            </div>
+          </button>
+          <button class="setting-row" type="button" id="settingLang">
+            <span>◎</span>
+            <div>
+              <strong data-i18n="languageSetting">اللغة</strong>
+              <p data-i18n="languageSettingText">عربي أو إنجليزي حسب المستخدم</p>
+            </div>
+          </button>
+        </section>
+      </section>
+    </main>
+
+    <footer>© 2026 NetCheck PRO · <span data-i18n="footerText">أداة ودودة لفهم وتحسين الإنترنت المنزلي</span></footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
