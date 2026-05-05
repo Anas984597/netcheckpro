@@ -70,7 +70,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -3;
-  background-image: url('assets/network_bg.png');
+ background-image: url('network_bg.png');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
